@@ -86,7 +86,7 @@ export class AuthService {
   }
 
   private generateToken(payload: TokenPayload): string {
-    return jwt.sign(payload, this.jwtSecret, { expiresIn: this.jwtExpiresIn });
+    return jwt.sign(payload, this.jwtSecret);
   }
 
   private normalizeEmail(email: string): string {
