@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Swagger
-setupSwagger(app);
+setupSwagger(app as any);
 
 // Routes
 app.use('/api', routes);
