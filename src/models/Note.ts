@@ -13,7 +13,7 @@ class Note extends Model {
   public id!: number;
   public title!: string;
   public current_version_id!: number;
-  public status_id!: string;
+  public status_id!: number;
   public author_id!: number;
 
   public readonly created_at!: Date;
