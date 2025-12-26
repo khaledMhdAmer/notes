@@ -19,13 +19,10 @@ export class AuthService {
   }
 
   async register(dto: CreateUserDto): Promise<AuthResponseDto> {
-    const name = dto.name ? dto.name.trim() : '';
-    const email = dto.email ? this.normalizeEmail(dto.email) : '';
-    const password = dto.password || '';
-
-    this.ensureRequiredFields({ name, email, password });
-    this.assertPasswordStrength(password);
-
+    const name = dto.name.trim();
+    const email = dto.email.toLowerCase();
+    const password = dto.password;
+console.log("object");
     const existingUser = await this.authRepository.findByEmail(email);
     if (existingUser) {
       throw new Error('Email is already registered');

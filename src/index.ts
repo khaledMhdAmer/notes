@@ -1,4 +1,5 @@
 import express, { Application } from 'express';
+import path from 'path';
 import { config } from './config/environment';
 import { connectDatabase } from './config/database';
 import { setupSwagger } from './swagger';
@@ -16,6 +17,13 @@ app.use('/api', routes);
 
 // Swagger
 // setupSwagger(app);
+
+// Serve static files from frontend dist
+const distPath = path.join(__dirname, '../dist/public');
+app.use(express.static(distPath));
+
+
+
 // Error handler (must be last)
 app.use(errorHandler);
 
@@ -26,7 +34,7 @@ const startServer = async () => {
     
     app.listen(config.port, () => {
       console.log(`Server running on http://localhost:${config.port}`);
-      console.log(`Swagger docs available at http://localhost:${config.port}/api`);
+      console.log(`API available at http://localhost:${config.port}/api`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);

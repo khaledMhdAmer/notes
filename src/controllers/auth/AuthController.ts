@@ -10,6 +10,7 @@ export class AuthController {
   }
 
   register = async (req: Request, res: Response) => {
+    
     try {
       const dto: CreateUserDto = req.body;
       const result = await this.authService.register(dto);

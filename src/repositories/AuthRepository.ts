@@ -7,6 +7,7 @@ export class AuthRepository extends BaseRepository<User> {
   }
 
   async findByEmail(email: string): Promise<User | null> {
+    console.log("email: " + email + "this: " + this);
     return await this.findOne({ where: { email } });
   }
 

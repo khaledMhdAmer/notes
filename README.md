@@ -1,77 +1,125 @@
-# NotesPlus - A Simple Note Taking Application with Version Control
+# NotesPlus
 
-A modern, full-stack note-taking application that empowers users to create, manage, and maintain version history of their notes with built-in access control and collaboration features.
+A modern, full-stack note-taking application with version control, built with Express.js and Vue.js.
 
-## 📋 Table of Contents
+## 📋 Project Summary
 
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Database Schema](#database-schema)
-- [Getting Started](#getting-started)
-- [API Endpoints](#api-endpoints)
-- [Future Enhancements](#future-enhancements)
-- [Contributing](#contributing)
+NotesPlus is a web application that allows users to create, manage, and maintain version history of their notes. Features include:
 
-## 🎯 Overview
+- **User Authentication** - Secure signup and login with JWT
+- **Note Management** - Create, edit, and delete notes
+- **Version Control** - Automatic tracking of all note changes
+- **Drafts** - Save work-in-progress notes as drafts
+- **Media Support** - Attach images and files to notes
+- **Audit Logging** - Track all user actions
+- **Role-based Access** - Permission-based access control
 
-NotesPlus is a full-stack web application that simplifies note management with powerful version control capabilities. Users can create notes, track changes across versions, manage drafts, and collaborate with others through permission-based sharing.
+## 🚀 Quick Start
 
-Whether you're jotting down quick ideas or managing complex documents, NotesPlus provides an intuitive interface backed by a robust backend architecture.
+### Prerequisites
 
-## ✨ Features
+- Node.js (v20+)
+- MySQL 8.0+
+- npm or yarn
 
-### Current Features
-- **User Authentication & Authorization**: Secure signup and login with JWT-based authentication
-- **Note Creation & Management**: Create, edit, and delete notes with ease
-- **Version Control**: Automatically track all changes to your notes with full version history
-- **Draft Support**: Save work-in-progress notes as drafts before finalizing
-- **User Sessions**: Persistent session management for seamless user experience
-- **Audit Logging**: Track all user actions for accountability and security
-- **Media Support**: Attach images and media files to your notes
-- **Basic Role System**: Foundation for role-based access control
+### Development
 
-### Planned Features
-- **Tagging System**: Organize and categorize notes with custom tags
-- **Advanced Permissions**: Fine-grained access control (view, edit, share)
-- **Note Sharing**: Collaborate with other users on shared notes
-- **Enhanced User Roles**: Admin, editor, viewer roles with specific permissions
-- **Search & Filtering**: Full-text search and advanced filtering capabilities
-- **Collaboration Features**: Real-time collaboration on shared notes
+1. Install dependencies:
+```bash
+npm install
+cd frontend && npm install && cd ..
+```
 
-## 🛠 Tech Stack
+2. Set up environment variables:
+```bash
+cp .env.example .env
+# Update .env with your database credentials
+```
 
-### Backend
-- **Runtime**: Node.js (^20.19.0 || >=22.12.0)
-- **Framework**: Express.js 5.x
-- **ORM**: Sequelize 6.x
-- **Database**: MySQL 2.x
-- **Authentication**: JWT (jsonwebtoken)
-- **Password Hashing**: bcryptjs
-- **API Documentation**: Swagger/OpenAPI with swagger-jsdoc and swagger-ui-express
-- **Language**: TypeScript
-- **Development**: Nodemon, TypeScript compiler
+3. Run database migrations:
+```bash
+npm run migrate
+```
 
-### Frontend
-- **Framework**: Vue.js 3.5.x
-- **Build Tool**: Vite
-- **Routing**: Vue Router 4.x
-- **State Management**: Pinia
-- **HTTP Client**: Axios
-- **UI Framework**: Radix Vue with Tailwind CSS
-- **CSS Utility**: Tailwind CSS 3.x
-- **Icons**: Lucide Vue Next
+4. Start development server (both backend and frontend):
+```bash
+npm run dev
+```
 
-### DevOps
-- **Containerization**: Docker & Docker Compose
-- **Language**: TypeScript (Backend & Frontend)
+The application will be available at `http://localhost:3000`
+
+### Production Build
+
+1. Build the application:
+```bash
+npm run build
+```
+
+2. Set environment variables for production:
+```bash
+export NODE_ENV=production
+# Update .env with production database and secrets
+```
+
+3. Start the production server:
+```bash
+npm start
+```
 
 ## 📁 Project Structure
 
 ```
-noteTaking/
-├── api/                          # Backend Express.js application
+.
+├── src/                     # Backend source code
+│   ├── config/             # Configuration files
+│   ├── controllers/        # Route handlers
+│   ├── middlewares/        # Express middlewares
+│   ├── models/             # Database models
+│   ├── repositories/       # Data access layer
+│   ├── routes/             # API routes
+│   ├── services/           # Business logic
+│   ├── migrations/         # Database migrations
+│   └── index.ts            # Server entry point
+├── frontend/               # Vue.js frontend
+│   ├── src/               # Frontend source code
+│   ├── public/            # Static assets
+│   ├── vite.config.ts     # Vite configuration
+│   └── package.json       # Frontend dependencies
+├── docker-compose.yml      # Docker setup
+└── package.json            # Backend dependencies
+```
+
+## 🛠 Tech Stack
+
+**Backend:**
+- Express.js 5.x
+- TypeScript
+- Sequelize ORM
+- MySQL 2.x
+- JWT Authentication
+
+**Frontend:**
+- Vue.js 3.5.x
+- Vite
+- Tailwind CSS
+- Axios
+
+## 📚 API Documentation
+
+API endpoints are available at `/api` when the server is running.
+
+Main endpoints:
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/notes` - Get all notes
+- `POST /api/notes` - Create a new note
+- `GET /api/notes/:id` - Get note details
+- `PUT /api/notes/:id` - Update a note
+- `DELETE /api/notes/:id` - Delete a note
+
+## 📝 License
+
+ISC
 │   ├── src/
 │   │   ├── config/              # Configuration files
 │   │   │   ├── config.json      # Database configuration
