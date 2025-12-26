@@ -11,12 +11,11 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Swagger
-setupSwagger(app as any);
-
 // Routes
 app.use('/api', routes);
 
+// Swagger
+// setupSwagger(app);
 // Error handler (must be last)
 app.use(errorHandler);
 
