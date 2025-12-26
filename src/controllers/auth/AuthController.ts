@@ -13,6 +13,7 @@ export class AuthController {
     
     try {
       const dto: CreateUserDto = req.body;
+      console.log(req);
       const result = await this.authService.register(dto);
       res.status(201).json(result);
     } catch (error) {

@@ -1,6 +1,9 @@
 import { UserRepository } from '../../repositories/UserRepository';
 import { CreateUserDto, UpdateUserDto, UserResponseDto } from '../../controllers/Users/User.Dto';
 import { User } from '../../models';
+// import { getCachedJson, invalidateCacheKeys, setCachedJson } from '../../utils/cache';
+
+// const ALL_USERS_CACHE_KEY = 'users:all';
 
 export class UserService {
   private userRepository: UserRepository;
@@ -10,8 +13,15 @@ export class UserService {
   }
 
   async getAllUsers(): Promise<UserResponseDto[]> {
+    // const cached = await getCachedJson<UserResponseDto[]>(ALL_USERS_CACHE_KEY);
+    // if (cached) {
+    //   return cached;
+    // }
+
     const users = await this.userRepository.findAll();
-    return users.map(this.mapToResponseDto);
+    const result = users.map(this.mapToResponseDto);
+    // await setCachedJson(ALL_USERS_CACHE_KEY, result);
+    return result;
   }
 
   async getUserById(id: number): Promise<UserResponseDto | null> {
@@ -23,6 +33,7 @@ export class UserService {
     // Add business logic here (e.g., hash password, validate, etc.)
     
     const user = await this.userRepository.create(dto);
+    // await this.invalidateUsersCache();
     return this.mapToResponseDto(user);
   }
 
@@ -34,12 +45,22 @@ export class UserService {
     }
 
     const updatedUser = await this.userRepository.findById(id);
-    return updatedUser ? this.mapToResponseDto(updatedUser) : null;
+    if (updatedUser) {
+      // await this.invalidateUsersCache();
+      return this.mapToResponseDto(updatedUser);
+    }
+
+    return null;
   }
 
   async deleteUser(id: number): Promise<boolean> {
     const deletedCount = await this.userRepository.delete(id);
-    return deletedCount > 0;
+    if (deletedCount > 0) {
+      // await this.invalidateUsersCache();
+      return true;
+    }
+
+    return false;
   }
 
   private mapToResponseDto(user: User): UserResponseDto {
@@ -50,4 +71,8 @@ export class UserService {
       createdAt: user.createdAt,
     };
   }
+
+  // private async invalidateUsersCache() {
+  //   await invalidateCacheKeys([ALL_USERS_CACHE_KEY]);
+  // }
 }

@@ -46,7 +46,7 @@ npm run migrate
 npm run dev
 ```
 
-The application will be available at `http://localhost:3000`
+The application will be available at `http://localhost:4002`
 
 ### Production Build
 
@@ -258,7 +258,7 @@ npx sequelize-cli db:migrate --config src/config/config.json
 npm start    # or npm run dev for development with auto-reload
 ```
 
-The API will be available at `http://localhost:3000`
+The API will be available at `http://localhost:4002`
 
 ### Backend Setup (Detailed)
 
@@ -280,7 +280,7 @@ The API will be available at `http://localhost:3000`
    DB_PASSWORD=your_password
    DB_NAME=notes_db
    JWT_SECRET=your_jwt_secret
-   PORT=3000
+   PORT=4002
    ```
 
 4. **Run database migrations**
@@ -301,9 +301,9 @@ The API will be available at `http://localhost:3000`
    npm start
    ```
 
-   The API will be available at `http://localhost:3000`
+   The API will be available at `http://localhost:4002`
    
-   Swagger documentation: `http://localhost:3000/api-docs`
+   Swagger documentation: `http://localhost:4002/api-docs`
 
 ### Frontend Setup
 

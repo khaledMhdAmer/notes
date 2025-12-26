@@ -1,6 +1,9 @@
 import { NotesRepository } from '../../repositories/NotesRepository';
 import { CreateNoteDto, UpdateNoteDto, NoteResponseDto } from '../../controllers/Notes/Note.Dto';
 import { Note } from '../../models';
+// import { getCachedJson, invalidateCacheKeys, setCachedJson } from '../../utils/cache';
+
+// const ALL_NOTES_CACHE_KEY = 'notes:all';
 
 export class NotesService {
   private notesRepository: NotesRepository;
@@ -22,7 +25,7 @@ export class NotesService {
       author_id: authorId,
       current_version_id: 1, // Default version
     });
-
+    // await this.invalidateNotesCache();
     return this.mapToResponseDto(note);
   }
 
@@ -32,8 +35,15 @@ export class NotesService {
   }
 
   async getAllNotes(): Promise<NoteResponseDto[]> {
+    // const cached = await getCachedJson<NoteResponseDto[]>(ALL_NOTES_CACHE_KEY);
+    // if (cached) {
+    //   return cached;
+    // }
+
     const notes = await this.notesRepository.findAll();
-    return notes.map(note => this.mapToResponseDto(note));
+    const result = notes.map(note => this.mapToResponseDto(note));
+    // await setCachedJson(ALL_NOTES_CACHE_KEY, result);
+    return result;
   }
 
   async getNotesByAuthor(authorId: number): Promise<NoteResponseDto[]> {
@@ -56,12 +66,22 @@ export class NotesService {
     }
 
     const updatedNote = await this.notesRepository.findById(id);
-    return updatedNote ? this.mapToResponseDto(updatedNote) : null;
+    if (updatedNote) {
+      // await this.invalidateNotesCache();
+      return this.mapToResponseDto(updatedNote);
+    }
+
+    return null;
   }
 
   async deleteNote(id: number): Promise<boolean> {
     const deletedCount = await this.notesRepository.delete(id);
-    return deletedCount > 0;
+    if (deletedCount > 0) {
+      // await this.invalidateNotesCache();
+      return true;
+    }
+
+    return false;
   }
 
   private mapToResponseDto(note: any): NoteResponseDto {
@@ -75,4 +95,8 @@ export class NotesService {
       updated_at: note.updated_at,
     };
   }
+
+  // private async invalidateNotesCache() {
+  //   await invalidateCacheKeys([ALL_NOTES_CACHE_KEY]);
+  // }
 }
