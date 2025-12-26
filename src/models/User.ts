@@ -1,5 +1,14 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../config/database';
+import Status from './Status';
+import Role from './Role';
+import Note from './Note';
+import NoteDraft from './NoteDraft';
+import NoteVersion from './NoteVersion';
+import Session from './Session';
+import Audit from './Audit';
+import UserNote from './UserNote';
+import NotePermission from './NotePermission';
 
 
 class User extends Model {
@@ -48,5 +57,16 @@ User.init(
     timestamps: true,
   }
 );
+
+// Define associations
+User.belongsTo(Status, { foreignKey: 'status_id' });
+User.belongsTo(Role, { foreignKey: 'role_id' });
+User.hasMany(Note, { foreignKey: 'author_id' });
+User.hasMany(NoteDraft, { foreignKey: 'user_id' });
+User.hasMany(NoteVersion, { foreignKey: 'user_id' });
+User.hasMany(Session, { foreignKey: 'user_id' });
+User.hasMany(Audit, { foreignKey: 'user_id' });
+User.belongsToMany(Note, { through: UserNote, foreignKey: 'user_id' });
+User.belongsToMany(Note, { through: NotePermission, foreignKey: 'user_id', as: 'permittedNotes' });
 
 export default User;

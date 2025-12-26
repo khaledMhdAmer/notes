@@ -21,6 +21,7 @@ export class UserService {
 
   async createUser(dto: CreateUserDto): Promise<UserResponseDto> {
     // Add business logic here (e.g., hash password, validate, etc.)
+    
     const user = await this.userRepository.create(dto);
     return this.mapToResponseDto(user);
   }

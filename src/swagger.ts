@@ -14,11 +14,17 @@ const options = {
         email: 'support@example.com',
       },
     },
-    servers: [
+    components: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT'
+      }
+    },
+    security: [
       {
-        url: 'http://localhost:3000',
-        description: 'Development server',
-      },
+        bearerAuth: []
+      }
     ],
   },
   // Path to the API docs

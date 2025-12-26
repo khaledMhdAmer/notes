@@ -11,12 +11,11 @@ const app: Application = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Swagger
-setupSwagger(app);
-
 // Routes
 app.use('/api', routes);
 
+// Swagger
+// setupSwagger(app);
 // Error handler (must be last)
 app.use(errorHandler);
 
@@ -27,7 +26,7 @@ const startServer = async () => {
     
     app.listen(config.port, () => {
       console.log(`Server running on http://localhost:${config.port}`);
-      console.log(`Swagger docs available at http://localhost:${config.port}/api-docs`);
+      console.log(`Swagger docs available at http://localhost:${config.port}/api`);
     });
   } catch (error) {
     console.error('Failed to start server:', error);
